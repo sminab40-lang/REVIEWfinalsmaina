@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REVIEW – English Worksheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ============ CSS VARIABLES ============ */
+:root{
+  --bg:#fff7e8; --ink:#2b2d42; --card:#ffffff;
+  --pink:#ff5d8f; --blue:#3a86ff; --green:#2bc48a; --yellow:#ffc233; --purple:#8b5cf6; --orange:#ff8a3d;
+  --radius:22px; --shadow:0 10px 28px rgba(43,45,66,.12);
+  --font-title:'Baloo 2',cursive; --font-body:'Nunito',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){ :root{ --bg:#fff7e8; } } /* keep classroom-bright */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-body);color:var(--ink);background:
+  radial-gradient(circle at 10% 10%,#ffe3ec 0,transparent 35%),
+  radial-gradient(circle at 90% 20%,#dff0ff 0,transparent 35%),
+  radial-gradient(circle at 50% 100%,#e2fbe9 0,transparent 40%), var(--bg);
+  min-height:100vh;overflow-x:hidden}
+.wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;position:relative;z-index:1}
+
+/* ============ FLOATING STARS ============ */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.stars span{position:absolute;bottom:-40px;animation:floatUp linear infinite;opacity:.55}
+@keyframes floatUp{to{transform:translateY(-115vh) rotate(360deg)}}
+
+/* ============ HEADER ============ */
+header{text-align:center;padding:26px 10px 10px}
+h1{font-family:var(--font-title);font-size:clamp(2.6rem,9vw,5rem);margin:0;font-weight:800;letter-spacing:2px;
+  background:linear-gradient(90deg,var(--pink),var(--orange),var(--yellow),var(--green),var(--blue),var(--purple));
+  background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+h1 .emo{display:inline-block;-webkit-text-fill-color:initial;animation:bounce 2s ease-in-out infinite}
+h1 .emo:last-child{animation-delay:.5s}
+@keyframes shine{to{background-position:200% center}}
+@keyframes bounce{50%{transform:translateY(-12px) rotate(8deg)}}
+.sub{font-weight:800;opacity:.7;margin-top:4px}
+
+/* ============ CARDS ============ */
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin:22px 0;border-top:8px solid var(--c,var(--blue));transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(43,45,66,.18)}
+.card h2{font-family:var(--font-title);margin:0 0 4px;font-size:1.8rem;color:var(--c,var(--blue))}
+.card h3{margin:14px 0 8px;font-size:1.1rem}
+.hint{background:#fff3c4;border-radius:12px;padding:8px 12px;font-weight:800;display:inline-block;margin:4px 0 12px}
+.wordbank{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.wordbank b{background:var(--yellow);padding:6px 14px;border-radius:999px;box-shadow:0 3px 0 rgba(0,0,0,.15);cursor:default;transition:transform .2s}
+.wordbank b:hover{transform:rotate(-4deg) scale(1.1)}
+
+/* ============ STUDENT INFO ============ */
+.info{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{font-weight:800;font-size:.9rem;display:block;margin-bottom:4px}
+input[type=text],select{width:100%;font:inherit;padding:12px 14px;border:3px solid #e3e6f3;border-radius:14px;background:#fbfcff;transition:border-color .2s,box-shadow .2s}
+input[type=text]:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(58,134,255,.2)}
+
+/* ============ MEDIA PLACEHOLDERS (blank space + destination field) ============ */
+.media{border:3px dashed #b9bfd8;border-radius:16px;background:repeating-linear-gradient(45deg,#f5f7ff,#f5f7ff 12px,#eef1ff 12px,#eef1ff 24px);
+  min-height:150px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;position:relative}
+.media.tall{min-height:200px}
+.media .slot{flex:1;display:flex;align-items:center;justify-content:center;color:#8a90b0;font-weight:800;min-height:100px}
+.media .slot img,.media .slot video{max-width:100%;max-height:260px;border-radius:10px}
+.media .slot audio{width:92%}
+/* The visible input styling is removed since we are changing it to a hidden input */
+.mediarow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:10px 0}
+
+/* ============ QUESTIONS ============ */
+.q{background:#fafbff;border:3px solid #eef0fa;border-radius:18px;padding:14px;margin:12px 0;transition:border-color .2s,background .2s}
+.q:hover{border-color:#cdd5f5}
+.q.correct{background:#e6fbf1;border-color:var(--green);animation:pop .4s}
+.q.wrong{background:#ffeaf0;border-color:var(--pink);animation:shake .4s}
+@keyframes pop{50%{transform:scale(1.02)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q p{margin:0 0 8px;font-weight:800}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{cursor:pointer;position:relative}
+.opt input{position:absolute;opacity:0}
+.opt span{display:block;padding:9px 16px;border-radius:999px;background:#fff;border:3px solid #dfe3f5;font-weight:800;transition:all .2s}
+.opt:hover span{transform:translateY(-2px);border-color:var(--blue)}
+.opt input:checked+span{background:var(--blue);color:#fff;border-color:var(--blue);transform:scale(1.05)}
+.opt input:focus-visible+span{outline:3px solid var(--purple)}
+.blank{width:140px!important;display:inline-block!important;padding:6px 10px!important;text-align:center;border-radius:10px!important;border-width:0 0 4px 0!important}
+.mark{float:right;font-size:1.4rem}
+
+/* ============ DIALOGUES ============ */
+.dialogue{font-weight:700;background:#fff;border-radius:12px;padding:10px;margin-bottom:8px;border-left:6px solid var(--c)}
+.dialogue div+div{margin-top:4px}
+
+/* ============ BUTTONS & RESULT ============ */
+.btn{font-family:var(--font-title);font-size:1.25rem;border:0;color:#fff;padding:12px 26px;border-radius:999px;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.18);transition:transform .15s,box-shadow .15s;margin:6px}
+.btn:hover{transform:translateY(-3px)}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.btn.go{background:var(--blue)} /* Changed Submit button to blue */
+.result{text-align:center}
+.score{font-family:var(--font-title);font-size:4rem;color:var(--purple);margin:0}
+.msg{font-size:1.3rem;font-weight:800}
+.bar{height:18px;background:#eceffb;border-radius:99px;overflow:hidden;margin:10px auto;max-width:420px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--green));transition:width 1s}
+
+/* ============ TOASTS ============ */
+#toasts{position:fixed;top:14px;right:14px;z-index:99;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;font-weight:800;box-shadow:var(--shadow);animation:slideIn .35s,fadeOut .4s 3s forwards}
+.toast.ok{background:var(--green)} .toast.err{background:var(--pink)} .toast.warn{background:var(--orange)}
+@keyframes slideIn{from{transform:translateX(120%);opacity:0}}
+@keyframes fadeOut{to{opacity:0;transform:translateY(-10px)}}
+
+@media(max-width:600px){.info{grid-template-columns:1fr}.card{padding:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars" aria-hidden="true"></div>
+<div id="toasts" role="status"></div>
+
+<div class="wrap">
+  <!-- ============ HEADER ============ -->
+  <header>
+    <h1><span class="emo">🌟</span> REVIEW <span class="emo">📚</span></h1>
+    <div class="sub">Greetings • Classroom language • Verbs • School vocabulary ✏️</div>
+  </header>
+
+  <!-- ============ STUDENT INFO ============ -->
+  <section class="card" style="--c:var(--pink)">
+    <h2>👧🧒 Student information</h2>
+    <div class="info">
+      <div><label for="name">Full Name</label><input type="text" id="name" placeholder="Write your name here…"></div>
+      <div><label for="grade">Class / Grade</label><input type="text" id="grade" placeholder="Example: 5th Grade – Class B"></div>
+    </div>
+  </section>
+
+  <!-- Exercises are rendered here by JavaScript -->
+  <div id="exercises"></div>
+
+  <!-- ============ RESULT ============ -->
+  <section class="card result" style="--c:var(--purple)">
+    <h2>🏆 My result</h2>
+    <!-- ONLY ONE BUTTON NOW -->
+    <button class="btn go" id="submitBtn">📤 Submit</button>
+    <div id="resultBox" hidden>
+      <p class="score" id="score">0/0</p>
+      <div class="bar"><i id="barFill"></i></div>
+      <p class="msg" id="message"></p>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script>
+/* ============ CONFIG ============ */
+// Replace with your deployed Google Apps Script Web App URL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwBF70ov8GP62wRsQm8v86sZf0DlAEFGf8MiV17dE-Xy6A8Jf_LdCUGQUOJWjDxX_AEIA/exec";
+
+/* ============ MEDIA PATHS ============
+   Paths are kept intact so files load properly, but they will be hidden from the UI. */
+const MEDIA = {
+  greetingVideo: "PE/video11.mp4",
+  p1: "Gex/EEE.jpg",
+  p2: "Gex/DDD.jpg",
+  p3: "Gex/FFF.jpg",
+  p4: "Gex/GGG.jpg",
+  vid1: "CL/AA.mp4",
+  vid2: "CL/CC.mp4",
+  vid3: "CL/BB.mp4",
+  audio1: "verbsaudio/10.wav",
+  pic1: "VERBS/1.png",
+  audio2: "verbsaudio/11.wav",
+  pic2: "VERBS/2.png",
+  schoolPic: "CO/OBJECT.png"
+};
+
+/* ============ QUESTION DATA ============ */
+const greetings = [
+  {pic:"p 1", q:"You arrive at school at 8:00 a.m.", o:["Good afternoon!","Good morning!","Good night!"], a:1},
+  {pic:"p 2", q:"Your friend gives you a pen.", o:["Thank you!","Excuse me.","Sorry."], a:0},
+  {pic:"p 3", q:"You accidentally step on someone's foot.", o:["Sorry.","Thanks.","Please."], a:0},
+  {pic:"p 4", q:"You meet your teacher after the summer vacation.", o:["Nice to see you!","No problem.","You're welcome."], a:0}
+];
+const classroom = [
+  {vid:"VID 1", s:"Can I go out ?", t:"Yes, you can .", c:"var(--blue)"},
+  {vid:"VID 2", s:"I don't understand", t:"Let's look at it again", c:"var(--yellow)"},
+  {vid:"VID 3", s:"Can I come in ?", t:"Come on in .", c:"var(--green)"}
+];
+const wordBank = ["walk","eat","drink","read","write","run","play"];
+const verbs = [
+  {pre:"I", post:"a book.", a:["read"]},
+  {pre:"We", post:"football.", a:["play"]},
+  {pre:"They", post:"water.", a:["drink"]},
+  {pre:"Ahmed", post:"to school.", a:["walks","walk"]},
+  {pre:"I", post:"a sandwich.", a:["eat"]},
+  {pre:"She", post:"very fast.", a:["runs","run"]},
+  {pre:"He", post:"his name.", a:["writes","write"]}
+];
+const vocab = [
+  {pre:"I write with a", o:["pen","desk"], post:".", a:0},
+  {pre:"The teacher is in the", o:["classroom","school bag"], post:".", a:0},
+  {pre:"I write my lessons in my", o:["notebook","teacher"], post:".", a:0},
+  {pre:"The", o:["student","book"], post:"reads a story.", a:0},
+  {pre:"I put my book on the", o:["desk","pen"], post:".", a:0},
+  {pre:"The", o:["student","book"], post:"listens to the teacher.", a:0},
+  {pre:"I read my", o:["book","classroom"], post:"at home.", a:0}
+];
+
+/* ============ HELPERS ============ */
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let finished = false;
+
+/* Media placeholder function */
+function media(label, kind="img", tall=false, key=""){
+  const id = "m" + Math.random().toString(36).slice(2,8);
+  const preset = (MEDIA[key] || "").trim();
+  const show = u => !u ? label : kind==="img" ? `<img src="${esc(u)}" alt="${esc(label)}">`
+    : kind==="video" ? `<video src="${esc(u)}" controls></video>` : `<audio src="${esc(u)}" controls></audio>`;
+  setTimeout(() => {
+    const inp = document.getElementById(id + "i"), slot = document.getElementById(id + "s");
+    inp.addEventListener("change", () => { slot.innerHTML = show(inp.value.trim()); });
+  });
+  
+  // CHANGED input type="text" to type="hidden" to hide the paths from the UI
+  return `<div class="media ${tall?'tall':''}"><div class="slot" id="${id}s">${show(preset)}</div>
+    <input type="hidden" id="${id}i" value="${esc(preset)}"></div>`;
+}
+
+/* Toast notification system */
+function toast(text, type="ok"){
+  const t = document.createElement("div"); t.className = "toast " + type; t.textContent = text;
+  $("#toasts").appendChild(t); setTimeout(() => t.remove(), 3500);
+}
+
+/* ============ RENDER EXERCISES ============ */
+function render(){
+  let h = "";
+  // --- Part 1
+  h += `<section class="card" style="--c:var(--blue)"><h2>👋 Greeting / polite expressions</h2>
+    <h3>🎬 Video</h3>${media("Video","video",false,"greetingVideo")}
+    <h3>✏️ Practice – Choose the correct expression</h3><div class="mediarow" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">`;
+  greetings.forEach((g,i) => {
+    h += `<div>${media(g.pic,"img",false,"p"+(i+1))}<div class="q" data-part="g" data-i="${i}"><span class="mark"></span><p>${i+1}. ${g.q}</p><div class="opts">` +
+      g.o.map((o,j) => `<label class="opt"><input type="radio" name="g${i}" value="${j}"><span>${"ABC"[j]}) ${o}</span></label>`).join("") +
+      `</div></div></div>`;
+  });
+  h += `</div></section>`;
+  // --- Part 2
+  h += `<section class="card" style="--c:var(--orange)"><h2>🏫 Classroom language</h2><p class="hint">Watch the videos and practise the dialogues with a friend!</p><div class="mediarow">`;
+  classroom.forEach((c,i) => {
+    h += `<div><div class="dialogue" style="--c:${c.c}"><div>🧒 Student: ${c.s}</div><div>👩‍🏫 Teacher: ${c.t}</div></div>${media(c.vid,"video",false,"vid"+(i+1))}</div>`;
+  });
+  h += `</div></section>`;
+  // --- Part 3
+  h += `<section class="card" style="--c:var(--green)"><h2>🏃 Verbs</h2><p class="hint">🎧 Listen and repeat</p>
+    <div class="mediarow"><div>${media("Audio track","audio",false,"audio1")}${media("Pic 1","img",false,"pic1")}</div><div>${media("Audio track","audio",false,"audio2")}${media("Pic 2","img",false,"pic2")}</div></div>
+    <h3>✍️ Complete the sentence</h3><div class="wordbank">${wordBank.map(w=>`<b>${w}</b>`).join("")}</div>`;
+  verbs.forEach((v,i) => {
+    h += `<div class="q" data-part="v" data-i="${i}"><span class="mark"></span>${i+1}. ${v.pre} <input type="text" class="blank" autocomplete="off" aria-label="Answer ${i+1}"> ${v.post}</div>`;
+  });
+  h += `</section>`;
+  // --- Part 4
+  h += `<section class="card" style="--c:var(--purple)"><h2>🎒 School vocabulary</h2>${media("Picture 1","img",true,"schoolPic")}
+    <h3>✅ Choose the correct word</h3>`;
+  vocab.forEach((v,i) => {
+    h += `<div class="q" data-part="w" data-i="${i}"><span class="mark"></span><p>${i+1}. ${v.pre} ___ ${v.post}</p><div class="opts">` +
+      v.o.map((o,j) => `<label class="opt"><input type="radio" name="w${i}" value="${j}"><span>${o}</span></label>`).join("") + `</div></div>`;
+  });
+  h += `</section>`;
+  $("#exercises").innerHTML = h;
+}
+
+/* ============ COLLECT ANSWERS ============ */
+function collect(){
+  const out = {greetings:[], verbs:[], vocabulary:[]};
+  greetings.forEach((g,i) => { const c = document.querySelector(`input[name=g${i}]:checked`); out.greetings.push(c ? g.o[c.value] : ""); });
+  document.querySelectorAll(".blank").forEach(b => out.verbs.push(b.value.trim()));
+  vocab.forEach((v,i) => { const c = document.querySelector(`input[name=w${i}]:checked`); out.vocabulary.push(c ? v.o[c.value] : ""); });
+  return out;
+}
+
+/* ============ SUBMIT (CHECK AND SAVE) ============ */
+async function submitAll(){
+  if(finished){
+     toast("You have already submitted!","warn");
+     return;
+  }
+  if(!$("#name").value.trim()){ 
+      toast("Please write your name first ✍️️","warn"); 
+      $("#name").focus(); 
+      return; 
+  }
+  
+  // 1. Grade the worksheet
+  const ans = collect(); let score = 0, total = 0;
+  const mark = (el, ok) => { el.classList.remove("correct","wrong"); void el.offsetWidth; el.classList.add(ok?"correct":"wrong"); el.querySelector(".mark").textContent = ok?"✅":"❌"; total++; if(ok) score++; };
+  document.querySelectorAll(".q").forEach(el => {
+    const i = +el.dataset.i, p = el.dataset.part;
+    if(p==="g"){ const c = document.querySelector(`input[name=g${i}]:checked`); mark(el, c && +c.value===greetings[i].a); }
+    if(p==="v"){ mark(el, verbs[i].a.includes(ans.verbs[i].toLowerCase())); }
+    if(p==="w"){ const c = document.querySelector(`input[name=w${i}]:checked`); mark(el, c && +c.value===vocab[i].a); }
+  });
+  
+  finished = true; window.lastScore = {score,total};
+  const pct = Math.round(score/total*100);
+  
+  // Show results
+  $("#resultBox").hidden = false; $("#score").textContent = `${score} / ${total}`;
+  setTimeout(() => $("#barFill").style.width = pct + "%", 50);
+  $("#message").textContent = pct===100 ? "🎉 PERFECT! You are a superstar! 🌟" : pct>=70 ? "👏 Great job! Keep going! 💪" : pct>=40 ? "🙂 Good try! Check the ❌ and try again!" : "🌱 Don't give up! Practice makes perfect!";
+  $("#resultBox").scrollIntoView({behavior:"smooth",block:"center"});
+  
+  if(pct>=70 && window.confetti){ 
+    confetti({particleCount:160,spread:80,origin:{y:.6}});
+    setTimeout(() => confetti({particleCount:100,angle:60,spread:60,origin:{x:0}}),300);
+    setTimeout(() => confetti({particleCount:100,angle:120,spread:60,origin:{x:1}}),500);
+  }
+
+  // 2. Save to Google Sheets
+  const payload = {
+    timestamp: new Date().toISOString(),
+    student: {fullName:$("#name").value.trim(), grade:$("#grade").value.trim()},
+    score: window.lastScore, answers: ans
+  };
+  
+  toast("Grading and saving… ⏳");
+  try{
+    await fetch(SCRIPT_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(payload)});
+    toast(`You got ${score}/${total}! Saved to Sheets! 🎉`,"ok");
+  }catch(e){ 
+    toast("Graded, but could not save. Check script URL ❌","err"); 
+  }
+}
+
+/* ============ FLOATING STARS ============ */
+(function(){
+  const box = $("#stars"), icons = ["⭐","✨","🌟","💫","🎈"];
+  for(let i=0;i<22;i++){
+    const s = document.createElement("span");
+    s.textContent = icons[i % icons.length];
+    s.style.left = Math.random()*100 + "%";
+    s.style.fontSize = (14 + Math.random()*26) + "px";
+    s.style.animationDuration = (12 + Math.random()*18) + "s";
+    s.style.animationDelay = (-Math.random()*25) + "s";
+    box.appendChild(s);
+  }
+})();
+
+/* ============ INIT ============ */
+render();
+$("#submitBtn").onclick = submitAll;
+toast("Welcome! Let's review ");
+</script>
+</body>
+</html>
